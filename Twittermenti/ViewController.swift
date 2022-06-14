@@ -47,7 +47,8 @@ class ViewController: UIViewController {
                     }
                 
                 }
-               
+                
+                self.makePrediction(with: tweets)
                 
                 
             }) { error in
@@ -59,7 +60,7 @@ class ViewController: UIViewController {
         
     }
     
-    func makePrediction() {
+    func makePrediction(with tweets:[TweetSentimentClassifierInput]) {
         do {
             
           let predictions = try self.sentimentClassifier.predictions(inputs: tweets)
@@ -76,19 +77,7 @@ class ViewController: UIViewController {
                 }
             }
             
-            if sentimentScore > 20 {
-                self.sentimentLabel.text = "😇"
-            } else if sentimentScore > 10 {
-                self.sentimentLabel.text = "😀"
-            }else if sentimentScore > 0 {
-                self.sentimentLabel.text = "🙂"
-            }else if sentimentScore == 0 {
-                self.sentimentLabel.text = "😒"
-            }else if sentimentScore > -20 {
-                self.sentimentLabel.text = "🤬"
-            }else{
-                self.sentimentLabel.text = "🤢"
-            }
+            updateUI(with: sentimentScore)
             
         }catch{
             print("There was an error with making a prediction, \(error)")
@@ -96,7 +85,20 @@ class ViewController: UIViewController {
         
     }
     
-    func updateUI() {
+    func updateUI(with sentimentScore: Int) {
+        if sentimentScore > 20 {
+            self.sentimentLabel.text = "😇"
+        } else if sentimentScore > 10 {
+            self.sentimentLabel.text = "😀"
+        }else if sentimentScore > 0 {
+            self.sentimentLabel.text = "🙂"
+        }else if sentimentScore == 0 {
+            self.sentimentLabel.text = "😒"
+        }else if sentimentScore > -20 {
+            self.sentimentLabel.text = "🤬"
+        }else{
+            self.sentimentLabel.text = "🤢"
+        }
         
     }
     
