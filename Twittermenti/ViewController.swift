@@ -39,9 +39,24 @@ class ViewController: UIViewController {
             do {
                 
               let predictions = try self.sentimentClassifier.predictions(inputs: tweets)
-                print(predictions[0].label)
+                
+                var sentimentScore = 0
+                
+                for pred in predictions {
+                    let sentiment = pred.label
+                    
+                    if sentiment == "Pos" {
+                        sentimentScore += 1
+                    } else if sentiment == "Neg" {
+                        sentimentScore -= 1
+                    }
+                }
+                
+                print(sentimentScore)
+                
+                
             }catch{
-                print("There was an error with mzking a prediction, \(error)")
+                print("There was an error with making a prediction, \(error)")
             }
             
             
