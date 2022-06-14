@@ -30,11 +30,16 @@ class ViewController: UIViewController {
 //
         swifter.searchTweet(using: "@Apple", lang: "en", count: 100, tweetMode: .extended, success: { results, searchMetadata in
             
+            var tweets = [String]()
             
-            if let tweet = results[0]["full_text"].string {
-                
-                print(tweet)
+            for i in 0..<100 {
+                if let tweet = results[i]["full_text"].string {
+                    tweets.append(tweet)
+                    
+                }
+            
             }
+            
             
             
         }) { error in
